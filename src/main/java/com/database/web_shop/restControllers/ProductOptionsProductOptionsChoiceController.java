@@ -40,16 +40,6 @@ public class ProductOptionsProductOptionsChoiceController {
         }
     }
 
-    @GetMapping("/productOptionsProductOptionsChoice/{id}")
-    public ResponseEntity<ProductOptionsProductOptionsChoice> oneProductOptionsProductOptionsChoice(@PathVariable int id){
-        try {
-            return new ResponseEntity<>(productOptionsProductOptionsChoiceService.findById(id), HttpStatus.OK);
-        } catch (NoSuchElementException e){
-            log.info(e.toString());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
     @PostMapping("/productOptionsProductOptionsChoice")
     @ResponseBody
     public ResponseEntity<ProductOptionsProductOptionsChoice> addProductOptionsProductOptionsChoice(@RequestBody ProductOptionsProductOptionsChoice productOptionsProductOptionsChoice){
@@ -65,10 +55,10 @@ public class ProductOptionsProductOptionsChoiceController {
         }
     }
 
-    @DeleteMapping("/productOptionsProductOptionsChoice/{id}")
-    public ResponseEntity<?> deleteProductOptionsProductOptionsChoice(@PathVariable int id){
+    @DeleteMapping("/productOptionsProductOptionsChoice")
+    public ResponseEntity<?> deleteProductOptionsProductOptionsChoice(@RequestBody ProductOptionsProductOptionsChoice productOptionsProductOptionsChoice){
         try {
-            productOptionsProductOptionsChoiceService.deleteById(id);
+            productOptionsProductOptionsChoiceService.delete(productOptionsProductOptionsChoice);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (NoSuchElementException e){
             log.info(e.toString());

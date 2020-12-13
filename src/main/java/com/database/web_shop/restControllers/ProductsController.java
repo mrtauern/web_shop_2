@@ -21,7 +21,7 @@ public class ProductsController {
 
     }
 
-    Logger log = Logger.getLogger(UserController.class.getName());
+    Logger log = Logger.getLogger(ProductsController.class.getName());
 
     @Autowired
     ProductsService productsService;
