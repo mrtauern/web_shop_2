@@ -1,10 +1,11 @@
 package com.database.web_shop.restControllers;
 
-import com.database.web_shop.models.Products;
+import com.database.web_shop.models.CreditCards;
 import com.database.web_shop.models.Users;
-import com.database.web_shop.services.ProductsService;
+import com.database.web_shop.services.CreditCardsService;
 import com.database.web_shop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,72 +16,73 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
-public class ProductsController {
+public class CreditCardsController {
 
-    public ProductsController(){
+    public CreditCardsController(){
 
     }
 
-    Logger log = Logger.getLogger(ProductsController.class.getName());
+    Logger log = Logger.getLogger(CreditCardsController.class.getName());
 
+    @Qualifier("CreditCardsService")
     @Autowired
-    ProductsService productsService;
+    CreditCardsService creditCardsService;
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Products>> allProducts(){
+    @GetMapping("/creditCards")
+    public ResponseEntity<List<CreditCards>> allCreditCards(){
         try {
-            List<Products> products = productsService.findAll();
-            if (products.isEmpty()) {
+            List<CreditCards> creditCards = creditCardsService.findAll();
+            if (creditCards.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(products, HttpStatus.OK);
+            return new ResponseEntity<>(creditCards, HttpStatus.OK);
         } catch (NoSuchElementException e){
             log.info(e.toString());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("/product/{id}")
-    public ResponseEntity<Products> oneProduct(@PathVariable int id){
+    @GetMapping("/creditCard/{id}")
+    public ResponseEntity<CreditCards> oneCreditCard(@PathVariable int id){
         try {
-            return new ResponseEntity<>(productsService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(creditCardsService.findById(id), HttpStatus.OK);
         } catch (NoSuchElementException e){
             log.info(e.toString());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/product")
+    @PostMapping("/creditCard")
     @ResponseBody
-    public ResponseEntity<Products> addProduct(@RequestBody Products product){
-        log.info(product.toString());
+    public ResponseEntity<CreditCards> addCreditCard(@RequestBody CreditCards creditCards){
+        log.info(creditCards.toString());
         /*user.setCountry(countriesService.findById(58L));
         user.setOrders(null);
         user.setReviews(null);*/
         try {
-            return new ResponseEntity<>(productsService.save(product), HttpStatus.CREATED);
+            return new ResponseEntity<>(creditCardsService.save(creditCards), HttpStatus.CREATED);
         } catch (NoSuchElementException e){
             log.info(e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/product/{id}")
-    public ResponseEntity<Products> editProduct(@RequestBody Products product, @PathVariable int id){
+    @PutMapping("/creditCard/{id}")
+    public ResponseEntity<CreditCards> editCreditCard(@RequestBody CreditCards creditCards, @PathVariable int id){
         try {
-            Products _products = productsService.findById(id);
-            product.setId(_products.getId());
-            return new ResponseEntity<>(productsService.save(product), HttpStatus.ACCEPTED);
+            CreditCards _creditCards = creditCardsService.findById(id);
+            creditCards.setId(_creditCards.getId());
+            return new ResponseEntity<>(creditCardsService.save(creditCards), HttpStatus.ACCEPTED);
         } catch (NoSuchElementException e){
             log.info(e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping("/product/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable int id){
+    @DeleteMapping("/creditCard/{id}")
+    public ResponseEntity<?> deleteCreditCard(@PathVariable int id){
         try {
-            productsService.deleteById(id);
+            creditCardsService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (NoSuchElementException e){
             log.info(e.toString());
