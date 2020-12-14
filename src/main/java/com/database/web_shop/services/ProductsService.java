@@ -16,4 +16,6 @@ public interface ProductsService {
     void deleteById(int id);
 
     void delete(Products products);
+
+    List<Products> getProductList(int amount, int page_no);
 }

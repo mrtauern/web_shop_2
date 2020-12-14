@@ -37,4 +37,9 @@ public class ProductsServiceImpl implements ProductsService {
     public void delete(Products products){
         productsRepo.delete(products);
     }
+
+    @Override
+    public List<Products> getProductList(int amount, int page_no){
+        return productsRepo.getProductList(amount, page_no);
+    }
 }
